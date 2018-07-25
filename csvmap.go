@@ -1,7 +1,8 @@
+// This package is awesome
 package csvmap
 
 import (
-    "os"
+//    "os"
     "bufio"
     "encoding/csv"
     "fmt"
@@ -14,9 +15,9 @@ type CsvMap struct {
     rows    [][]string
 }
 
-//func NewCsvMap(r io.Reader) (*CsvMap, error) {
-func NewCsvMap(s string) CsvMap {
-    return buildCsvMap(readerFactory(s))
+func NewCsvMap(r io.Reader) (*CsvMap, error) {
+//func NewCsvMap(s string) CsvMap {
+    return buildCsvMap(readerFactory(r)), nil
 
 }
 
@@ -25,6 +26,7 @@ func (c *CsvMap) addRow(r []string) {
     c.rows = append(c.rows, r)
 }
 
+// It explodes
 func (c *CsvMap) ValuesByCol() {
     // Print values broken up by header
     for header, _ := range c.headers {
@@ -35,16 +37,16 @@ func (c *CsvMap) ValuesByCol() {
     }
 }
 
-func initCsvMap() CsvMap {
+func initCsvMap() *CsvMap {
     // Initialize a CsvMap
-    return CsvMap{headers: make(map[string]int), rows: make([][]string, 0, 1024)}
+    return &CsvMap{headers: make(map[string]int), rows: make([][]string, 0, 1024)}
 }
 
-func readerFactory(infile string) *csv.Reader {
+func readerFactory(infile io.Reader) *csv.Reader {
     // Create a CSV Reader
     // TODO handle file open error here
-    csvFile, _ := os.Open(infile)
-    return csv.NewReader(bufio.NewReader(csvFile))
+//    csvFile, _ := os.Open(infile)
+    return csv.NewReader(bufio.NewReader(infile))
 }
 
 func buildHeaders(r []string) map[string]int {
@@ -58,7 +60,7 @@ func buildHeaders(r []string) map[string]int {
 }
 
 //func buildCsvMap(c *csv.Reader) CsvMap {
-func buildCsvMap(c *csv.Reader) CsvMap {
+func buildCsvMap(c *csv.Reader) *CsvMap {
     // Create a CsvMap from the CSV file
     isFirst := true
     cm := initCsvMap()
