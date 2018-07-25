@@ -28,7 +28,6 @@ func (c *CsvMap) addRow(r []string) {
 func (c *CsvMap) ValuesByCol() {
     // Print values broken up by header
     for header, _ := range c.headers {
-        fmt.Println("Header:", header)
         for _, row := range c.rows {
             fmt.Printf("\t%v\n", row[c.headers[header]])
         }
@@ -50,7 +49,6 @@ func readerFactory(infile string) *csv.Reader {
 func buildHeaders(r []string) map[string]int {
     // Build a map for the headers so we can pull
     // data from rows by header vs index
-    fmt.Println("Building header...")
     headerMap := make(map[string]int)
     for i, headerName := range r {
         headerMap[headerName] = i
@@ -63,8 +61,6 @@ func buildCsvMap(c *csv.Reader) CsvMap {
     // Create a CsvMap from the CSV file
     isFirst := true
     cm := initCsvMap()
-
-    fmt.Println("Building CsvMap...")
 
     for {
         row, err := c.Read()
