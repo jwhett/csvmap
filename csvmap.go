@@ -28,6 +28,7 @@ func (c *CsvMap) addRow(r []string) {
 func (c *CsvMap) ValuesByCol() {
     // Print values broken up by header
     for header, _ := range c.headers {
+        fmt.Printf("%v:\n", header)
         for _, row := range c.rows {
             fmt.Printf("\t%v\n", row[c.headers[header]])
         }
