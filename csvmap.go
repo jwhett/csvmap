@@ -1,5 +1,5 @@
 // This package allows you to interact with CSV
-// strings with keys vs index position.
+// strings by key vs index position.
 package csvmap
 
 import (
