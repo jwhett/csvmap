@@ -1,8 +1,8 @@
-// This package is awesome
+// This package allows you to interact with CSV
+// strings with keys vs index position.
 package csvmap
 
 import (
-//    "os"
     "bufio"
     "encoding/csv"
     "fmt"
@@ -10,25 +10,27 @@ import (
     "log"
 )
 
+// CsvMap provides a conventient interface for interacting
+// with CSV data.
 type CsvMap struct {
     headers map[string]int
     rows    [][]string
 }
 
+// NewCsvMap is your entry point for creating a map
+// from CSV data.
 func NewCsvMap(r io.Reader) (*CsvMap, error) {
-//func NewCsvMap(s string) CsvMap {
     return buildCsvMap(readerFactory(r)), nil
-
 }
 
+// addRow is an internal method for adding rows
+// of CSV data to the CsvMap struct.
 func (c *CsvMap) addRow(r []string) {
-    // Helper to add rows
     c.rows = append(c.rows, r)
 }
 
-// It explodes
+// ValuesByCol is exposed for visually testing the mapped data.
 func (c *CsvMap) ValuesByCol() {
-    // Print values broken up by header
     for header, _ := range c.headers {
         fmt.Printf("%v:\n", header)
         for _, row := range c.rows {
@@ -37,21 +39,19 @@ func (c *CsvMap) ValuesByCol() {
     }
 }
 
+// Initialize a CsvMap with empty data.
 func initCsvMap() *CsvMap {
-    // Initialize a CsvMap
     return &CsvMap{headers: make(map[string]int), rows: make([][]string, 0, 1024)}
 }
 
+// readerFactory will build and return CSV Readers.
 func readerFactory(infile io.Reader) *csv.Reader {
-    // Create a CSV Reader
-    // TODO handle file open error here
-//    csvFile, _ := os.Open(infile)
     return csv.NewReader(bufio.NewReader(infile))
 }
 
+// buildHeaders will build a map for the header row so
+// we can reference data from each row by header.
 func buildHeaders(r []string) map[string]int {
-    // Build a map for the headers so we can pull
-    // data from rows by header vs index
     headerMap := make(map[string]int)
     for i, headerName := range r {
         headerMap[headerName] = i
@@ -59,9 +59,8 @@ func buildHeaders(r []string) map[string]int {
     return headerMap
 }
 
-//func buildCsvMap(c *csv.Reader) CsvMap {
+// Create a CsvMap from the CSV file
 func buildCsvMap(c *csv.Reader) *CsvMap {
-    // Create a CsvMap from the CSV file
     isFirst := true
     cm := initCsvMap()
 
