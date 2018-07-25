@@ -1,7 +1,12 @@
 package csvmap
 
 import (
+    "os"
+    "bufio"
+    "encoding/csv"
+    "fmt"
     "io"
+    "log"
 )
 
 type CsvMap struct {
@@ -9,18 +14,18 @@ type CsvMap struct {
     rows    [][]string
 }
 
-/*
-func NewCsvMap(r io.Reader) (*CsvMap, error) {
+//func NewCsvMap(r io.Reader) (*CsvMap, error) {
+func NewCsvMap(s string) CsvMap {
+    return buildCsvMap(readerFactory(s))
 
 }
-*/
 
 func (c *CsvMap) addRow(r []string) {
     // Helper to add rows
     c.rows = append(c.rows, r)
 }
 
-func (c *CsvMap) valuesByCol() {
+func (c *CsvMap) ValuesByCol() {
     // Print values broken up by header
     for header, _ := range c.headers {
         fmt.Println("Header:", header)
@@ -30,7 +35,7 @@ func (c *CsvMap) valuesByCol() {
     }
 }
 
-func newCsvMap() CsvMap {
+func initCsvMap() CsvMap {
     // Initialize a CsvMap
     return CsvMap{headers: make(map[string]int), rows: make([][]string, 0, 1024)}
 }
@@ -42,10 +47,22 @@ func readerFactory(infile string) *csv.Reader {
     return csv.NewReader(bufio.NewReader(csvFile))
 }
 
+func buildHeaders(r []string) map[string]int {
+    // Build a map for the headers so we can pull
+    // data from rows by header vs index
+    fmt.Println("Building header...")
+    headerMap := make(map[string]int)
+    for i, headerName := range r {
+        headerMap[headerName] = i
+    }
+    return headerMap
+}
+
+//func buildCsvMap(c *csv.Reader) CsvMap {
 func buildCsvMap(c *csv.Reader) CsvMap {
     // Create a CsvMap from the CSV file
     isFirst := true
-    cm := newCsvMap()
+    cm := initCsvMap()
 
     fmt.Println("Building CsvMap...")
 
