@@ -1,12 +1,19 @@
 package csvmap_test
 
 import (
-    "fmt"
+    // "fmt"
     "os"
     "github.com/jwhett/csvmap"
 )
 
-func ExampleAddRow() {
+func ExampleNewCsvMap_file() {
+    f, _ := os.Open("test.csv")
+    cm, _ := csvmap.NewCsvMap(f)
+    cm.PrintValuesByCol()
+}
+
+/*
+func ExampleAddRow_test() {
     f, _ := os.Open("test.csv")
     cm, _ := csvmap.NewCsvMap(f)
     newRow := make([]string, 3)
@@ -33,10 +40,4 @@ func ExampleGetRows() {
         fmt.Println(row)
     }
 }
-
-func ExampleNewCsvMap_file() {
-    f, _ := os.Open("test.csv")
-    cm, _ := csvmap.NewCsvMap(f)
-    cm.PrintValuesByCol()
-}
-
+*/
