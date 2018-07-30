@@ -13,8 +13,8 @@ func ExampleNewCsvMap_file() {
 
 func ExampleAddRow() {
     for _, row := range cm.GetRows() {
-        fmt.Println("Row:", row)
-        // Output: "Row: [John Doe jdoe]
+        fmt.Println(row)
+        // Output: [John Doe jdoe]
     }
 
     newRow := make([]string, 3)
@@ -25,26 +25,26 @@ func ExampleAddRow() {
     cm.AddRow(newRow)
 
     for _, row := range cm.GetRows() {
-        fmt.Println("Row:", row)
-        // Output: "Row: [John Doe jdoe]
-        // Output: "Row: [Jane Doe jdoe2]
+        fmt.Println(row)
+        // Output: [John Doe jdoe]
+        // Output: [Jane Doe jdoe2]
     }
 }
 
 func ExampleGetHeaders() {
     headers := cm.GetHeaders()
     for header, _ := range headers {
-        fmt.Println("Header:", header)
+        fmt.Println(header)
     }
-    // Output: "Header: firstname"
-    // Output: "Header: lastname"
-    // Output: "Header: id"
+    // Output: firstname
+    // Output: lastname
+    // Output: id
 }
 
 func ExampleGetRows() {
     rows := cm.GetRows()
     for _, row := range rows {
-        fmt.Println("Row:", row)
+        fmt.Println(row)
     }
-    // Output: "Row: [John Doe jdoe]"
+    // Output: [John Doe jdoe]
 }
