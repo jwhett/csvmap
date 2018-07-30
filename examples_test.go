@@ -37,5 +37,6 @@ func ExampleGetRows() {
 func ExampleNewCsvMap_file() {
     f, _ := os.Open("test.csv")
     cm, _ := csvmap.NewCsvMap(f)
+    cm.PrintValuesByCol()
 }
 
