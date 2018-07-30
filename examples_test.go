@@ -1,13 +1,19 @@
 package csvmap_test
 
+import (
+    "fmt"
+    "os"
+    "github.com/jwhett/csvmap"
+)
+
 func ExampleNewCsvMap_file() {
     f, _ := os.Open("test.csv")
     cm, _ := csvmap.NewCsvMap(f)
 }
 
 func ExampleAddRow() {
-    for _, row := cm.GetRows() {
-        fmt.Println("Row:" row)
+    for _, row := range cm.GetRows() {
+        fmt.Println("Row:", row)
         // Output: "Row: [John Doe jdoe]
     }
 
@@ -18,8 +24,8 @@ func ExampleAddRow() {
 
     cm.AddRow(newRow)
 
-    for _, row := cm.GetRows() {
-        fmt.Println("Row:" row)
+    for _, row := range cm.GetRows() {
+        fmt.Println("Row:", row)
         // Output: "Row: [John Doe jdoe]
         // Output: "Row: [Jane Doe jdoe2]
     }
@@ -27,7 +33,7 @@ func ExampleAddRow() {
 
 func ExampleGetHeaders() {
     headers := cm.GetHeaders()
-    for header, _ :range headers {
+    for header, _ := range headers {
         fmt.Println("Header:", header)
     }
     // Output: "Header: firstname"
