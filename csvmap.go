@@ -1,5 +1,5 @@
 // This package allows you to interact with CSV
-// strings by key vs index position.
+// data by key vs index position. CSV --> CsvMap
 package csvmap
 
 import (
@@ -23,14 +23,25 @@ func NewCsvMap(r io.Reader) (*CsvMap, error) {
     return buildCsvMap(readerFactory(r)), nil
 }
 
-// addRow is an internal method for adding rows
-// of CSV data to the CsvMap struct.
-func (c *CsvMap) addRow(r []string) {
+// AddRow is a method for adding rows
+// of data to the CsvMap struct.
+func (c *CsvMap) AddRow(r []string) {
     c.rows = append(c.rows, r)
 }
 
-// ValuesByCol is exposed for visually testing the mapped data.
-func (c *CsvMap) ValuesByCol() {
+// GetHeaders returns a map of headers with
+// index.
+func (c CsvMap) GetHeaders() map[string]int {
+    return c.headers
+}
+
+// GetRows returns a slice of slices (rows)
+func (c CsvMap) GetRows() [][]string {
+    return c.rows
+}
+
+// PrintValuesByCol is exposed for visually testing the mapped data.
+func (c *CsvMap) PrintValuesByCol() {
     for header, _ := range c.headers {
         fmt.Printf("%v:\n", header)
         for _, row := range c.rows {
@@ -82,7 +93,7 @@ func buildCsvMap(c *csv.Reader) *CsvMap {
             continue
         }
 
-        cm.addRow(row)
+        cm.AddRow(row)
     }
     return cm
 }
