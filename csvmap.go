@@ -1,4 +1,4 @@
-// This package allows you to interact with CSV
+// Package csvmap allows you to interact with CSV
 // data by key vs index position. CSV --> CsvMap
 package csvmap
 
@@ -42,7 +42,7 @@ func (c CsvMap) GetRows() [][]string {
 
 // PrintValuesByCol is exposed for visually testing the mapped data.
 func (c *CsvMap) PrintValuesByCol() {
-    for header, _ := range c.headers {
+    for header := range c.headers {
         fmt.Printf("%v:\n", header)
         for _, row := range c.rows {
             fmt.Printf("\t%v\n", row[c.headers[header]])
