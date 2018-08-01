@@ -40,6 +40,16 @@ func (c CsvMap) GetRows() [][]string {
     return c.rows
 }
 
+// Header returns index location
+func (c CsvMap) Header(h string) int {
+    return c.headers[h]
+}
+
+// Get retuns row value that matches key
+func (c CsvMap) Get(key string, row []string) string {
+    return row[c.Header(key)]
+}
+
 // PrintValuesByCol is exposed for visually testing the mapped data.
 func (c *CsvMap) PrintValuesByCol() {
     for header := range c.headers {
